@@ -5,11 +5,19 @@
 	</head>
 	<body>
 		<div id="name">
+			<label class="label">This is a label</label>
 			<input id="input1" class="input"/>
+			<label class="label">This is a label</label>
 			<input id="input2" class="input" name="input2"/>	
 		</div>
 		<div id="mom">
+			<label class="label">This is a label</label>
 			<input id="input3" class="input" name="input3"/>	
+		</div>
+		<div>
+			<p id="p1" class="p">This is paragraph 1.</p>
+			<p id="p2" class="p">This is paragraph 2.</p>
+			<p id="p3" class="p">This is paragraph 3.</p>
 		</div>
 		<button class="btn">Button</button>
 		<script src = MakeBelieve.js></script>
@@ -20,6 +28,8 @@
 			console.log(__('#input1').parent());
 			console.log(__('#input1').parent('#name'));
 			console.log(__('#input1').parent('#names'));
+			__('#p1').insertText('Texti!');
+			__('#p1d').insertText('Texti!');
 		</script>
 	</body>
 	

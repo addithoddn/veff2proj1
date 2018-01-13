@@ -28,7 +28,7 @@
 			return {};
 		}
 		else if(this.length == 1) {
-			parentElement = this.elem.parentElement
+			parentElement = this.elem.parentElement;
 			if(parentElement) {
 				if(query) {
 					if (parentElement.matches(query)) {
@@ -43,7 +43,7 @@
 		}
 		else {
 			for(var i = 0; i < this.length; i++) {
-				parentElement = this.elem[i].parentElement
+				parentElement = this.elem[i].parentElement;
 				if(query) {
 					if(parentElement.matches(query)) {
 						if(!parents.includes(parentElement)) {
@@ -62,6 +62,66 @@
 			return new myElem(parents, parents.length);
 		}
 		return {};
+	};
+
+	myElem.prototype.grandParent = function(query) {
+		grandParents = [];
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		else if (this.length == 1) {
+			grandParentElement = this.elem.parentElement.parentElement;
+			if(grandParentElement) {
+				if(query) {
+					if(grandParentElement.matches(query)) {
+						return new myElem(grandParentElement, 1);
+					}
+				}
+				else {
+					return new myElem(grandParentElement, 1);
+				}
+			}
+		}
+		else {
+			for(var i = 0; i < this.length; i++) {
+				garndParentElement = this.elem[i].parent.parent;
+				if (query) {
+					if(grandParentElement.matches(query)) {
+						if(!grandParents.includes(grandParentElement)) {
+							grandParents.push(grandParentElement);
+						}
+					}
+				}
+				else {
+					if(grandParentElement) {
+						if(!grandParents.includes(grandParentElement)) {
+							grandParents.push(grandParenetElement);
+						}
+					}
+				}
+			}
+		}
+		return {};
+	};
+
+
+	myElem.prototype.anscestor = function(query) {
+
+		return {};
+	};
+
+	myElem.prototype.insertText = function(text) {
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		else if(this.length == 1) {
+			this.elem.textContent = text;
+		}
+		else {
+			for(var element of this.elem) {
+				element.textContent = text;
+			}	
+		}
 	};
 
 	window.__ = makeBelieve;
