@@ -22,12 +22,6 @@
 	};
 
 	myElem.prototype.parent = function(query) {
-		if(query) {
-			var possibleParents = query.querySelectorAll(query);
-		}
-		else {
-			possibleParents = [];
-		}
 
 		parents = [];
 		if(isEmptyObject(this)) {
@@ -36,12 +30,9 @@
 		else if(this.length == 1) {
 			parentElement = this.elem.parentElement
 			if(parentElement) {
-				// if css selector, check parent of element against elements the selector returns
 				if(query) {
-					for( var i = 0; i < possibleParents.length; i++) {
-						if(possibleParents[i] === parentElement){
-							return new myElem(parentElement, 1);
-						}
+					if (parentElement.matches(query)) {
+						return new myElem(parentElement, 1);
 					}
 				}
 				// else just return the parent of the element.
@@ -54,15 +45,9 @@
 			for(var i = 0; i < this.length; i++) {
 				parentElement = this.elem[i].parentElement
 				if(query) {
-					for(var j = 0; j < possibleParents.length; j++){
-						
-						if(parentElement) {
-							if(parentElement === possibleParents[j]) {
-								if(!parents.includes(parentElement)) {
-									parents.push(parentElement);
-								}
-								break;
-							}
+					if(parentElement.matches(query)) {
+						if(!parents.includes(parentElement)) {
+							parents.push(parentElement);
 						}
 					}
 				}
