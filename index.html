@@ -16,6 +16,9 @@
 			<div>
 				<button class="btn">Button2</button>
 			</div>	
+			<div id="dad">
+				
+			</div>
 		</div>
 		<div>
 			<p id="p1" class="p">This is paragraph 1.</p>
@@ -43,8 +46,13 @@
 			console.log('ancestor');
 			console.log(__('.btn').ancestor());
 			console.log(__('#mom').append("<p>paragraph<p/>"));
-			console.log(__('#mom').prepend("<p>paragraph2<p/>"));
-			console.log(__('#mom').prepend(__('#p3').elem[0]));
+			//console.log(__('#mom').prepend("<p>paragraph2<p/>"));
+			//console.log(__('#dad').prepend(__('#p3').elem[0]));
+			console.log(__('.label'));
+			console.log(__('.label').css('background-color','red'));
+			__('.input').toggleClass('nugat');
+			__('.input').toggleClass('nugat');
+			__('.input').toggleClass('nugat');
 		</script>
 	</body>
 	

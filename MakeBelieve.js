@@ -146,11 +146,11 @@
 		}
 		else {
 			for(var element of this.elem) {
-				if(element.childNodes.length == 0) {
+				if(element.childElementCount == 0) {
 					element.appendChild(newElement);
 				}
 				else {
-					element.insertBefore(newElement, element.childNodes[0]);
+					element.insertBefore(newElement, element.firstElementChild);
 				}
 			}
 		}
@@ -165,6 +165,36 @@
 				element.parentElement.removeChild(element);
 			}
 		}
+	};
+
+	MyElem.prototype.ajax = function() {
+
+	};
+
+	MyElem.prototype.css = function(attribute, value) {
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		for(var element of this.elem) {
+			element.setAttribute(attribute, value);
+		}
+	};
+
+	MyElem.prototype.toggleClass = function(newClass) {
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		for(var element of this.elem) {
+			element.classList.toggle(newClass);
+		}
+	};
+
+	MyElem.prototype.onSubmit = function(evt) {
+
+	};
+
+	MyElem.prototype.onInput = function(evt) {
+
 	};
 
 	window.__ = makeBelieve;
