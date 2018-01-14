@@ -42,6 +42,9 @@
 			console.log(__('#input1').grandParent('div'));
 			console.log('ancestor');
 			console.log(__('.btn').ancestor());
+			console.log(__('#mom').append("<p>paragraph<p/>"));
+			console.log(__('#mom').prepend("<p>paragraph2<p/>"));
+			console.log(__('#mom').prepend(__('#p3').elem[0]));
 		</script>
 	</body>
 	

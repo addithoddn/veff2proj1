@@ -125,12 +125,35 @@
 	// TODO HANDLER
 
 	
-	MyElem.prototype.append = function() {
-
+	MyElem.prototype.append = function(newElement) {
+		if(typeof newElement == "string") {
+			for(var element of this.elem) {
+				element.innerHTML += newElement;
+			}
+		}
+		else {
+			for(var element of this.elem) {
+				element.appendChild(newElement);
+			}
+		}
 	};
 
-	MyElem.prototype.prepend = function() {
-
+	MyElem.prototype.prepend = function(newElement) {
+		if(typeof newElement == "string") {
+			for(var element of this.elem) {
+				element.innerHTML = newElement + element.innerHTML;
+			}
+		}
+		else {
+			for(var element of this.elem) {
+				if(element.childNodes.length == 0) {
+					element.appendChild(newElement);
+				}
+				else {
+					element.insertBefore(newElement, element.childNodes[0]);
+				}
+			}
+		}
 	};
 
 	MyElem.prototype.delete = function() {
