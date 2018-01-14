@@ -121,8 +121,18 @@
 		}
 	};
 
-	// hér kemur event handler dótið
-	// TODO HANDLER
+	MyElem.prototype.onClick = function() {
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		
+		for(var element of this.elem) {
+			element.addEventListener('click', function(evt) {
+				evt.stopPropagation();
+				console.log(this);
+			});
+		}
+	};
 
 	
 	MyElem.prototype.append = function(newElement) {
@@ -178,6 +188,7 @@
 		for(var element of this.elem) {
 			element.setAttribute(attribute, value);
 		}
+		console.log(this);
 	};
 
 	MyElem.prototype.toggleClass = function(newClass) {
