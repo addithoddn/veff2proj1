@@ -137,6 +137,11 @@
 		if(isEmptyObject(this)) {
 			return {};
 		}
+		for(var element of this.elem) {
+			if(element.parentElement) {
+				element.parentElement.removeChild(element);
+			}
+		}
 	};
 
 	window.__ = makeBelieve;
