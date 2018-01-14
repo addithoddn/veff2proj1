@@ -8,7 +8,7 @@
 		return false;
 	}
 
-	function myElem(elem, length) {
+	function MyElem(elem, length) {
 		this.elem = elem.length === 1 ? elem[0] : elem;
 		this.length = length;
 	};
@@ -16,12 +16,12 @@
 	var makeBelieve = function(query) {
 		var nodelist = document.querySelectorAll(query);
 		if (nodelist) {
-			return new myElem(nodelist, nodelist.length);
+			return new MyElem(nodelist, nodelist.length);
 		}
 		return {};
 	};
 
-	myElem.prototype.parent = function(query) {
+	MyElem.prototype.parent = function(query) {
 
 		parents = [];
 		if(isEmptyObject(this)) {
@@ -32,12 +32,12 @@
 			if(parentElement) {
 				if(query) {
 					if (parentElement.matches(query)) {
-						return new myElem(parentElement, 1);
+						return new MyElem(parentElement, 1);
 					}
 				}
 				// else just return the parent of the element.
 				else {
-					return new myElem(this.elem.parentElement, 1);
+					return new MyElem(this.elem.parentElement, 1);
 				}
 			}
 		}
@@ -59,12 +59,12 @@
 					}
 				}
 			}
-			return new myElem(parents, parents.length);
+			return new MyElem(parents, parents.length);
 		}
 		return {};
 	};
 
-	myElem.prototype.grandParent = function(query) {
+	MyElem.prototype.grandParent = function(query) {
 		grandParents = [];
 		if(isEmptyObject(this)) {
 			return {};
@@ -74,11 +74,11 @@
 			if(grandParentElement) {
 				if(query) {
 					if(grandParentElement.matches(query)) {
-						return new myElem(grandParentElement, 1);
+						return new MyElem(grandParentElement, 1);
 					}
 				}
 				else {
-					return new myElem(grandParentElement, 1);
+					return new MyElem(grandParentElement, 1);
 				}
 			}
 		}
@@ -105,12 +105,12 @@
 	};
 
 
-	myElem.prototype.anscestor = function(query) {
+	MyElem.prototype.anscestor = function(query) {
 
 		return {};
 	};
 
-	myElem.prototype.insertText = function(text) {
+	MyElem.prototype.insertText = function(text) {
 		if(isEmptyObject(this)) {
 			return {};
 		}
@@ -122,6 +122,22 @@
 				element.textContent = text;
 			}	
 		}
+	};
+
+	// hér kemur event handler dótið
+	// TODO HANDLER
+
+	
+	MyElem.prototype.append = function() {
+
+	};
+
+	MyElem.prototype.prepend = function() {
+
+	};
+
+	MyElem.prototype.delete = function() {
+
 	};
 
 	window.__ = makeBelieve;

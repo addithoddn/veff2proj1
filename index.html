@@ -18,6 +18,8 @@
 			<p id="p1" class="p">This is paragraph 1.</p>
 			<p id="p2" class="p">This is paragraph 2.</p>
 			<p id="p3" class="p">This is paragraph 3.</p>
+			<div>
+			</div>	
 		</div>
 		<button class="btn">Button</button>
 		<script src = MakeBelieve.js></script>
@@ -30,6 +32,8 @@
 			console.log(__('#input1').parent('#names'));
 			__('#p1').insertText('Texti!');
 			__('#p1d').insertText('Texti!');
+			console.log(__('#input1').grandParent());
+			console.log(__('#input1').grandParent('div'));
 		</script>
 	</body>
 	
