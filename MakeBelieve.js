@@ -9,7 +9,7 @@
 	}
 
 	function MyElem(elem, length) {
-		this.elem = elem.length === 1 ? elem[0] : elem;
+		this.elem = elem;
 		this.length = length;
 	};
 
@@ -27,41 +27,26 @@
 		if(isEmptyObject(this)) {
 			return {};
 		}
-		else if(this.length == 1) {
-			parentElement = this.elem.parentElement;
-			if(parentElement) {
-				if(query) {
-					if (parentElement.matches(query)) {
-						return new MyElem(parentElement, 1);
-					}
-				}
-				// else just return the parent of the element.
-				else {
-					return new MyElem(this.elem.parentElement, 1);
-				}
-			}
-		}
-		else {
-			for(var i = 0; i < this.length; i++) {
-				parentElement = this.elem[i].parentElement;
-				if(query) {
-					if(parentElement.matches(query)) {
-						if(!parents.includes(parentElement)) {
-							parents.push(parentElement);
-						}
-					}
-				}
-				else{
-					if(parentElement) {
-						if(!parents.includes(parentElement)){
-							parents.push(parentElement);
-						}
+
+		for(var i = 0; i < this.length; i++) {
+			parentElement = this.elem[i].parentElement;
+			if(query) {
+				if(parentElement.matches(query)) {
+					if(!parents.includes(parentElement)) {
+						parents.push(parentElement);
 					}
 				}
 			}
-			return new MyElem(parents, parents.length);
+			else{
+				if(parentElement) {
+					if(!parents.includes(parentElement)){
+						parents.push(parentElement);
+					}
+				}
+			}
 		}
-		return {};
+		return new MyElem(parents, parents.length);
+
 	};
 
 	MyElem.prototype.grandParent = function(query) {
@@ -69,53 +54,65 @@
 		if(isEmptyObject(this)) {
 			return {};
 		}
-		else if (this.length == 1) {
-			grandParentElement = this.elem.parentElement.parentElement;
-			if(grandParentElement) {
-				if(query) {
-					if(grandParentElement.matches(query)) {
-						return new MyElem(grandParentElement, 1);
+		for(var i = 0; i < this.length; i++) {
+			if(this.elem[i].parentElement){
+				console.log('if query');
+				if(this.elem[i].parentElement.parentElement) {
+
+					grandParentElement = this.elem[i].parentElement.parentElement;
+					if (query) {
+						if(grandParentElement.matches(query)) {
+
+							if(!grandParents.includes(grandParentElement)) {
+								grandParents.push(grandParentElement);
+							}
+						}
 					}
-				}
-				else {
-					return new MyElem(grandParentElement, 1);
-				}
-			}
-		}
-		else {
-			for(var i = 0; i < this.length; i++) {
-				garndParentElement = this.elem[i].parent.parent;
-				if (query) {
-					if(grandParentElement.matches(query)) {
-						if(!grandParents.includes(grandParentElement)) {
-							grandParents.push(grandParentElement);
+					else {
+						if(grandParentElement) {
+							if(!grandParents.includes(grandParentElement)) {
+								grandParents.push(grandParentElement);
+							}
 						}
 					}
 				}
-				else {
-					if(grandParentElement) {
-						if(!grandParents.includes(grandParentElement)) {
-							grandParents.push(grandParenetElement);
-						}
-					}
-				}
-			}
+			}	
 		}
-		return {};
+		return new MyElem(grandParents, grandParents.length);
 	};
 
 
-	MyElem.prototype.anscestor = function(query) {
-
-		return {};
+	MyElem.prototype.ancestor = function(query) {
+		ancestors = [];
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		for(var element of this.elem) {
+			if(element.parentElement) {
+				if(element.parentElement.parentElement) {
+					if(element.parentElement.parentElement.parentElement){
+						var ancestor = element.parentElement.parentElement.parentElement;
+						if(query) {
+							while(!ancestor.matches(query) && ancestor.parentElement) {
+								ancestor = ancestor.parentElement;
+							}
+							if(ancestor.matches(query)) {
+								ancestors.push(ancestor);
+							}
+						}
+						else {
+							ancestors.push(ancestor);
+						}
+					}
+				}
+			}
+		}
+		return new MyElem(ancestors, ancestors.length);
 	};
 
 	MyElem.prototype.insertText = function(text) {
 		if(isEmptyObject(this)) {
 			return {};
-		}
-		else if(this.length == 1) {
-			this.elem.textContent = text;
 		}
 		else {
 			for(var element of this.elem) {
@@ -137,7 +134,9 @@
 	};
 
 	MyElem.prototype.delete = function() {
-
+		if(isEmptyObject(this)) {
+			return {};
+		}
 	};
 
 	window.__ = makeBelieve;

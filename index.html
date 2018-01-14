@@ -12,7 +12,10 @@
 		</div>
 		<div id="mom">
 			<label class="label">This is a label</label>
-			<input id="input3" class="input" name="input3"/>	
+			<input id="input3" class="input" name="input3"/>
+			<div>
+				<button class="btn">Button2</button>
+			</div>	
 		</div>
 		<div>
 			<p id="p1" class="p">This is paragraph 1.</p>
@@ -24,16 +27,21 @@
 		<button class="btn">Button</button>
 		<script src = MakeBelieve.js></script>
 		<script>
+			console.log('__');
 			console.log(__('#name input'));
 			console.log(__('.input'));
+			console.log('parent');
 			console.log(__('.input').parent());
 			console.log(__('#input1').parent());
 			console.log(__('#input1').parent('#name'));
 			console.log(__('#input1').parent('#names'));
 			__('#p1').insertText('Texti!');
 			__('#p1d').insertText('Texti!');
+			console.log('grandparent');
 			console.log(__('#input1').grandParent());
 			console.log(__('#input1').grandParent('div'));
+			console.log('ancestor');
+			console.log(__('.btn').ancestor());
 		</script>
 	</body>
 	
