@@ -121,16 +121,13 @@
 		}
 	};
 
-	MyElem.prototype.onClick = function() {
+	MyElem.prototype.onClick = function(func) {
 		if(isEmptyObject(this)) {
 			return {};
 		}
 		
 		for(var element of this.elem) {
-			element.addEventListener('click', function(evt) {
-				evt.stopPropagation();
-				console.log(this);
-			});
+			element.addEventListener('click', func);
 		}
 	};
 
@@ -177,8 +174,17 @@
 		}
 	};
 
-	MyElem.prototype.ajax = function() {
+	MyElem.prototype.ajax = function(options) {
+		var method = options.method || 'GET';
+		var request = new XMLHttpRequest();
+		request.open(method, options.url);
+		request.onreadystatechange = function() {
+			if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+				console.log(request.responseText);
+			}
+		};
 
+		request.send(JSON.stringify(options.data));
 	};
 
 	MyElem.prototype.css = function(attribute, value) {
@@ -186,7 +192,7 @@
 			return {};
 		}
 		for(var element of this.elem) {
-			element.setAttribute(attribute, value);
+			element.style[attribute] = value;
 		}
 		console.log(this);
 	};
@@ -200,12 +206,22 @@
 		}
 	};
 
-	MyElem.prototype.onSubmit = function(evt) {
-
+	MyElem.prototype.onSubmit = function(func) {
+	if(isEmptyObject(this)) {
+			return {};
+		}
+		for(var element of this.elem) {
+			element.addEventListener('submit', func);		
+		}
 	};
 
-	MyElem.prototype.onInput = function(evt) {
-
+	MyElem.prototype.onInput = function(func) {
+		if(isEmptyObject(this)) {
+			return {};
+		}
+		for(var element of this.elem) {
+			element.addEventListener('input', func);		
+		}
 	};
 
 	window.__ = makeBelieve;
