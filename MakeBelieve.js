@@ -195,6 +195,7 @@
 	makeBelieve.ajax = function(options) {
 		var tempMethod = options.method;
 		var method;
+		// get method type or provide a default 'GET' method
 		if(typeof tempMethod === 'string') {
 			tempMethod = tempMethod.toUpperCase();
 			if(tempMethod === 'POST' || tempMethod === 'PUT' || tempMethod === 'OPTIONS' ||
@@ -203,34 +204,74 @@
 			}
 		}
 		method = method || 'GET';
-		var request = new XMLHttpRequest();
-		request.open(method, options.url);
-		for(var header of options.headers) {
-			request.setRequestHeader(Object.keys(header)[0], header[Object.keys(header)]);
-			console.log(Object.keys(header)[0], typeof(Object.keys(header)[0]));
-			console.log(header[Object.keys(header)], typeof(header[Object.keys(header)]));
-			//request.setRequestHeader();
+
+		// set the timeout of the request in milliseconds, defaulting to 0 (no timeout)
+		var timeout = options.timeout;
+		if(timeout) {
+			if(typeof timeout === 'string') {
+				timeout = parseInt(timeout);
+				
+			}
+		}	
+		if (typeof timeout === 'number') {
+			// NaN and Infinity are of type 'number' so we set the default value.
+			if(timeout === NaN || timeout === Infinity || timeout < 0) {
+				timeout = 0;
+			}
+		}
+		else {
+			timeout = 0;
 		}
 		
+		var request = new XMLHttpRequest();
+		request.open(method, options.url);
+		request.timeout = timeout;
+
+		// set request headers
+		if(options.headers) {
+			for(var header of options.headers) {
+				request.setRequestHeader(Object.keys(header)[0], header[Object.keys(header)]);
+			}
+		}
+		else {
+			options.headers = {};
+		}
 		request.onreadystatechange = function() {
 			if (request.readyState === XMLHttpRequest.DONE ) {
+				// call the success function if we get a success status code.
 				if(request.status >= 200 && request.status < 300) {
 					if(typeof options.success === 'function') {
 						options.success(request.responseText);
 					}
+					else {
+						options.success = null;
+					}
 					
 				}
+				// call fail function if response is a client or server error status code.
 				else if(request.status >= 400) {
 					if(typeof options.fail === 'function') {
 						options.fail(request.responseText);
 					}
-					
+					else {
+						options.fail = null;
+					}
 				}
 			}
 		};
+		// provide some feedback if the request timed out.
+		request.ontimeout = function(evt) {
+			console.log("request timed out.");
+		}
 
 		if(typeof options.beforeSend === 'function') {
 			options.beforeSend(request);
+		}
+		else {
+			options.beforeSend = null;
+		}
+		if(!options.data) {
+			options.data = {};
 		}
 		request.send(JSON.stringify(options.data));
 	};

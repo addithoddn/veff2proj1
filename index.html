@@ -33,6 +33,7 @@
 		<button class="btn">Button</button>
 		<script src = MakeBelieve.js></script>
 		<script>
+			
 			console.log('__');
 			console.log(__('#name input'));
 			console.log(__('.input'));
@@ -59,15 +60,21 @@
 			__('.label').onClick(function(evt) {console.log(this);});
 			__('#name').onClick(function(evt) {console.log(this);});
 			console.log('web');
+			
+			__('#input3').onInput(function(evt){ console.log(evt.target.value);});
+			__('#form').onSubmit(function(evt) {
+				console.log('submit');
+				return false;});
 			__.ajax({
 				url: 'https://serene-island-81305.herokuapp.com/200',
-				method: 'post',
+				method: 'POST',
+				timeout: "",
 				data: {name: 'john connor', age: 12, gender: 'male'},
 				headers: [
-					{'Authorization': 'my-secret-key'}
+					{'Authorization': 'my-secret-key'}, {'Content-Type' : 'application/json'}
 				],
 				success: function(resp){
-					console.log('herro');
+					console.log(resp, "herro");
 				},
 				fail: function(err){
 					console.log(err);
@@ -77,10 +84,6 @@
 				}
 
 			});
-			__('#input3').onInput(function(evt){ console.log(evt.target.value);});
-			__('#form').onSubmit(function(evt) {
-				console.log('submit');
-				return false;});
 		</script>
 	</body>
 	
