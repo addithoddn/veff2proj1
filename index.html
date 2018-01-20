@@ -58,10 +58,23 @@
 			__('.input').toggleClass('nugat');
 			__('.label').onClick(function(evt) {console.log(this);});
 			__('#name').onClick(function(evt) {console.log(this);});
-			__().ajax({
+			console.log('web');
+			__.ajax({
 				url: 'https://serene-island-81305.herokuapp.com/200',
-				method: 'POST',
-				data: {name: 'john connor', age: 12, gender: 'male'}
+				method: 'post',
+				data: {name: 'john connor', age: 12, gender: 'male'},
+				headers: [
+					{'Authorization': 'my-secret-key'}
+				],
+				success: function(resp){
+					console.log('herro');
+				},
+				fail: function(err){
+					console.log(err);
+				},
+				beforeSend: function(xhr){
+
+				}
 
 			});
 			__('#input3').onInput(function(evt){ console.log(evt.target.value);});
