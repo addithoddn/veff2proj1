@@ -1,36 +1,26 @@
+// Höfundur: Arnar Þórðarson
+// Dagsetning: 21/01/2018
+// Skrá: MakeBelieve.js
+// Library sem líkir eftir hluta af virkni JQuery
+
 (function() {
-
-	
-
-	// function that returns if an object is the empty object.
-	function isEmptyObject(object) {
-		if (Object.keys(object).length == 0){
-			return true;
-		}
-		return false;
-	};
 
 	function MyElem(elem, length) {
 		this.elem = elem;
 		this.length = length;
 	};
 
+	// return a new MyElem object that contains a list of the elements selected 
+	// by the css query string.
 	var makeBelieve = function(query) {
 		var nodelist = document.querySelectorAll(query);
-		if (nodelist) {
-			return new MyElem(nodelist, nodelist.length);
-		}
-		return {};
+		return new MyElem(nodelist, nodelist.length);
 	};
 
 	// Returns the parent elements of the elements in this that match the 
 	// query string or if no string given
 	MyElem.prototype.parent = function(query) {
 
-		
-		if(isEmptyObject(this)) {
-			return {};
-		}
 		parents = [];
 		for(var i = 0; i < this.length; i++) {
 			parentElement = this.elem[i].parentElement;
@@ -57,12 +47,9 @@
 	// query string or if no string given
 	MyElem.prototype.grandParent = function(query) {
 		grandParents = [];
-		if(isEmptyObject(this)) {
-			return {};
-		}
+
 		for(var i = 0; i < this.length; i++) {
 			if(this.elem[i].parentElement){
-				console.log('if query');
 				if(this.elem[i].parentElement.parentElement) {
 
 					grandParentElement = this.elem[i].parentElement.parentElement;
@@ -91,18 +78,19 @@
 	// query string or if no string given
 	MyElem.prototype.ancestor = function(query) {
 		ancestors = [];
-		if(isEmptyObject(this)) {
-			return {};
-		}
+
 		for(var element of this.elem) {
 			if(element.parentElement) {
+				// check if the element has an ancestor at all
 				if(element.parentElement.parentElement) {
 					if(element.parentElement.parentElement.parentElement){
 						var ancestor = element.parentElement.parentElement.parentElement;
 						if(query) {
+							// get the first ancestor that matches the query string
 							while(!ancestor.matches(query) && ancestor.parentElement) {
 								ancestor = ancestor.parentElement;
 							}
+							// if that ancestor is not already in the ancestors list, add it to the list.
 							if(ancestor.matches(query)) {
 								if(!ancestors.includes(ancestor)) {
 									ancestors.push(ancestor);
@@ -123,23 +111,15 @@
 
 	// insert text into the elements in this.
 	MyElem.prototype.insertText = function(text) {
-		if(isEmptyObject(this)) {
-			return {};
-		}
-		else {
-			for(var element of this.elem) {
-				element.textContent = text;
-			}	
-		}
+		for(var element of this.elem) {
+			element.textContent = text;
+		}	
 	};
 
 	// attach an onClick event to the elements in this that will execute 
 	// the func function when triggered
 	MyElem.prototype.onClick = function(func) {
-		if(isEmptyObject(this)) {
-			return {};
-		}
-		
+
 		for(var element of this.elem) {
 			element.addEventListener('click', func);
 		}
@@ -180,9 +160,6 @@
 
 	// delete the elements in this
 	MyElem.prototype.delete = function() {
-		if(isEmptyObject(this)) {
-			return {};
-		}
 
 		for(var element of this.elem) {
 			if(element.parentElement) {
@@ -278,9 +255,7 @@
 
 	// set the css atribute to the value given on all elements in this.
 	MyElem.prototype.css = function(attribute, value) {
-		if(isEmptyObject(this)) {
-			return {};
-		}
+
 		for(var element of this.elem) {
 			element.style[attribute] = value;
 		}
@@ -288,9 +263,7 @@
 
 	// toggle a class on the elements in this.
 	MyElem.prototype.toggleClass = function(newClass) {
-		if(isEmptyObject(this)) {
-			return {};
-		}
+
 		for(var element of this.elem) {
 			element.classList.toggle(newClass);
 		}
@@ -298,9 +271,7 @@
 
 	// add a sumbit event listener to the elements in this.
 	MyElem.prototype.onSubmit = function(func) {
-	if(isEmptyObject(this)) {
-			return {};
-		}
+
 		for(var element of this.elem) {
 			element.addEventListener('submit', func);		
 		}
@@ -308,9 +279,7 @@
 
 	// add an event lister for the onInput event to the elements in this.
 	MyElem.prototype.onInput = function(func) {
-		if(isEmptyObject(this)) {
-			return {};
-		}
+
 		for(var element of this.elem) {
 			element.addEventListener('input', func);		
 		}

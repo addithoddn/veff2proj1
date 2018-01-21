@@ -37,6 +37,7 @@
 			console.log('__');
 			console.log(__('#name input'));
 			console.log(__('.input'));
+			console.log(__('#freedom'));
 			console.log('parent');
 			console.log(__('.input').parent());
 			console.log(__('#input1').parent());
@@ -50,6 +51,7 @@
 			console.log('ancestor');
 			console.log(__('.btn').ancestor());
 			console.log(__('#mom').append("<p>paragraph<p/>"));
+			__('#mom').append(document.createElement('p').appendChild(document.createTextNode('I am an appended node')));
 			//console.log(__('#mom').prepend("<p>paragraph2<p/>"));
 			//console.log(__('#dad').prepend(__('#p3').elem[0]));
 			console.log(__('.label'));
